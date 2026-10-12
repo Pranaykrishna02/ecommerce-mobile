@@ -1,98 +1,224 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { SafeAreaView } from "react-native-safe-area-context";
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import ProductCard, { type Product } from "@/components/ProductCard";
+
+import CategoryItem, { type Category } from "@/components/CategoryItem";
+
+import PromoBanner from "@/components/PromoBanner";
+import SectionHeader from "@/components/SectionHeader";
+
+const categories: Category[] = [
+  { id: "1", name: "Electronics", emoji: "🎧" },
+  { id: "2", name: "Fashion", emoji: "👕" },
+  { id: "3", name: "Shoes", emoji: "👟" },
+  { id: "4", name: "Accessories", emoji: "⌚" },
+];
+
+const products: Product[] = [
+  {
+    id: "1",
+    name: "Wireless Headphones",
+    price: "₹1,499",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=85",
+  },
+  {
+    id: "2",
+    name: "Classic Sneakers",
+    price: "₹1,999",
+    image:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=85",
+  },
+  {
+    id: "3",
+    name: "Smart Watch",
+    price: "₹2,499",
+    image:
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=85",
+  },
+  {
+    id: "4",
+    name: "Travel Backpack",
+    price: "₹999",
+    image:
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=85",
+  },
+];
 
 export default function HomeScreen() {
+  const handleCategoryPress = (category: Category) => {
+    console.log("Selected category:", category.name);
+  };
+
+  const handleProductPress = (product: Product) => {
+    console.log("Selected product:", product.name);
+  };
+
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Store Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.storeName}>MyStore</Text>
+            <Text style={styles.storeSubtitle}>
+              Your everyday shopping destination
+            </Text>
+          </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+          <View style={styles.cartIcon}>
+            <Text style={styles.cartEmoji}>🛍️</Text>
+          </View>
+        </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        {/* Welcome Section */}
+        <View style={styles.welcomeSection}>
+          <Text style={styles.welcomeTitle}>Hello, Shopper! 👋</Text>
+
+          <Text style={styles.welcomeSubtitle}>
+            Find something you'll love today.
+          </Text>
+        </View>
+
+        {/* Promotional Banner */}
+        <PromoBanner />
+
+        {/* Categories */}
+        <SectionHeader
+          title="Shop by Category"
+          action="See all"
+          onActionPress={() => console.log("See all categories pressed")}
+        />
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categoriesList}
+        >
+          {categories.map((item) => (
+            <CategoryItem
+              key={item.id}
+              item={item}
+              onPress={handleCategoryPress}
+            />
+          ))}
+        </ScrollView>
+
+        {/* Featured Products */}
+        <SectionHeader
+          title="Featured Products"
+          action="See all"
+          onActionPress={() => console.log("See all products pressed")}
+        />
+
+        <View style={styles.productsGrid}>
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onPress={() => handleProductPress(product)}
+            />
+          ))}
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            Thanks for shopping with MyStore ❤️
+          </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
   safeArea: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    backgroundColor: "#FFFFFF",
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  scrollContent: {
+    paddingHorizontal: 18,
+    paddingTop: 12,
+    paddingBottom: 40,
   },
-  title: {
-    textAlign: 'center',
+
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
   },
-  code: {
-    textTransform: 'uppercase',
+
+  storeName: {
+    fontSize: 27,
+    fontWeight: "800",
+    color: "#172033",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  storeSubtitle: {
+    color: "#7B8494",
+    fontSize: 11,
+    marginTop: 3,
+  },
+
+  cartIcon: {
+    width: 46,
+    height: 46,
+    borderRadius: 15,
+    backgroundColor: "#F0F4FF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  cartEmoji: {
+    fontSize: 23,
+  },
+
+  welcomeSection: {
+    marginBottom: 20,
+  },
+
+  welcomeTitle: {
+    fontSize: 21,
+    fontWeight: "800",
+    color: "#172033",
+  },
+
+  welcomeSubtitle: {
+    fontSize: 13,
+    color: "#7B8494",
+    marginTop: 5,
+  },
+
+  categoriesList: {
+    paddingBottom: 27,
+    gap: 17,
+  },
+
+  productsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "stretch",
+    rowGap: 16,
+  },
+
+  footer: {
+    alignItems: "center",
+    paddingVertical: 27,
+  },
+
+  footerText: {
+    color: "#7B8494",
+    fontSize: 12,
   },
 });
