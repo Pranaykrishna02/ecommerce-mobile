@@ -1,56 +1,128 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# MyStore - React Native Expo Assignment 1
 
-## Get started
+## Project Overview
 
-1. Install dependencies
+MyStore is a mobile shopping application home screen developed using React Native, Expo, and TypeScript. It provides a simple and attractive shopping experience with product categories, featured products, and promotional offers.
 
-   ```bash
-   npm install
-   ```
+## Features
 
-2. Start the app
+- Store header and welcome message
+- Promotional shopping banner
+- Four shopping categories
+- Four featured products with images and prices
+- Reusable UI components
+- Horizontal category scrolling
+- Vertical home screen scrolling
+- Interactive product buttons
+- Bottom navigation UI
 
-   ```bash
-   npx expo start
-   ```
+## Technologies Used
 
-In the output, you'll find options to open the app in a
+- React Native
+- Expo
+- TypeScript
+- Expo Router
+- React Native Safe Area Context
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Project Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+src/
+├── app/
+│   └── index.tsx
+└── components/
+    ├── ProductCard.tsx
+    ├── CategoryItem.tsx
+    ├── SectionHeader.tsx
+    ├── PromoBanner.tsx
+    └── PrimaryButton.tsx
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Reusable Components
 
-### Other setup steps
+| Component | Description |
+|---|---|
+| ProductCard | Displays a product image, name, price, and button |
+| CategoryItem | Displays an individual shopping category |
+| SectionHeader | Displays a section title and action label |
+| PromoBanner | Displays the promotional offer |
+| PrimaryButton | Provides a reusable button UI |
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Getting Started
 
-## Learn more
+### Prerequisites
 
-To learn more about developing your project with Expo, look at the following resources:
+- Node.js and npm
+- Expo Go installed on your Android or iOS device
+- Git (optional, for version control)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Installation
 
-## Join the community
+Clone the repository:
 
-Join our community of developers creating universal apps.
+```bash
+git clone https://github.com/Pranaykrishna02/ecommerce-mobile.git
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Navigate into the project folder:
+
+```bash
+cd ecommerce-mobile
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the Expo development server:
+
+```bash
+npx expo start
+```
+
+Scan the displayed QR code using Expo Go to open the application.
+
+If you encounter a bundler cache issue, run:
+
+```bash
+npx expo start --clear
+```
+
+## Testing
+
+The following tests passed on an Android device:
+
+- Home screen and promotional banner display
+- Four shopping categories display
+- Product images load correctly
+- Product names and prices are readable
+- Product buttons respond without crashing the app
+- Vertical and horizontal scrolling work
+- No render-error screen appears during testing
+
+## Screenshots
+
+Add screenshots of the working MyStore application here before final submission.
+
+## Research Questions and Answers
+
+Add the eight research questions and their answers from the original assignment instructions in this section.
+
+## Scope
+
+This assignment focuses on the mobile user interface. Product buttons currently provide UI interaction and do not implement backend product navigation, checkout, or payment processing.
+
+## Future Improvements
+
+- Product details screen
+- Search and filtering
+- Shopping cart functionality
+- Backend API integration
+- User authentication
+
+## Author
+
+Pranay Krishna Vamsi
