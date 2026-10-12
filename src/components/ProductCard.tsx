@@ -1,54 +1,46 @@
+import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-
-export type Product = {
-  id: string;
-  name: string;
-  price: string;
-  image: string;
-};
+import type { Product } from "../../data/products";
 
 type ProductCardProps = {
   product: Product;
-  onPress: () => void;
 };
 
-export default function ProductCard({
-  product,
-  onPress,
-}: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
+  const handlePress = () => {
+    Alert.alert("Product Selected", product.name);
+  };
+
   return (
     <View style={styles.card}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: product.image }}
-          style={styles.image}
-          resizeMode="contain"
-          accessibilityLabel={product.name}
-        />
-      </View>
-
-      <Text style={styles.name} numberOfLines={2}>
-        {product.name}
-      </Text>
-
-      <Text style={styles.price}>{product.price}</Text>
-
       <Pressable
+        onPress={handlePress}
         accessibilityRole="button"
-        onPress={onPress}
-        style={({ pressed }) => [
-          styles.button,
-          pressed && styles.pressed,
-        ]}
+        accessibilityLabel={`View details for ${product.name}`}
+        style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
       >
-        <Text style={styles.buttonText}>View Product</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: product.image }}
+            style={styles.image}
+            resizeMode="contain"
+            accessibilityLabel={product.name}
+          />
+        </View>
+
+        <Text style={styles.name} numberOfLines={2}>
+          {product.name}
+        </Text>
+
+        <Text style={styles.category}>{product.category}</Text>
+
+        <Text style={styles.price}>
+          {`₹${product.price.toLocaleString("en-IN")}`}
+        </Text>
+
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>View Details</Text>
+        </View>
       </Pressable>
     </View>
   );
@@ -56,45 +48,57 @@ export default function ProductCard({
 
 const styles = StyleSheet.create({
   card: {
-    width: "48.5%",
-    padding: 10,
-    marginBottom: 12,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: "#EDF0F5",
+    flex: 1,
     backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E8ECF3",
+    overflow: "hidden",
+    marginBottom: 0,
+  },
+  pressable: {
+    flex: 1,
+    padding: 10,
   },
   imageContainer: {
-    height: 125,
-    marginBottom: 10,
+    height: 130,
+    backgroundColor: "#F6F8FC",
     borderRadius: 10,
-    backgroundColor: "#F8F9FC",
+    marginBottom: 10,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   image: {
     width: "100%",
     height: "100%",
   },
   name: {
+    minHeight: 38,
     fontSize: 13,
+    lineHeight: 18,
     fontWeight: "700",
-    color: "#273247",
-    minHeight: 36,
+    color: "#172033",
+  },
+  category: {
+    fontSize: 11,
+    color: "#778195",
+    marginTop: 4,
   },
   price: {
     fontSize: 16,
     fontWeight: "800",
-    color: "#172033",
-    marginVertical: 10,
+    color: "#243D8F",
+    marginTop: 8,
+    marginBottom: 10,
   },
   button: {
-    backgroundColor: "#425BD5",
-    paddingVertical: 11,
+    minHeight: 38,
     borderRadius: 9,
+    backgroundColor: "#425BD5",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 40,
+    paddingHorizontal: 4,
   },
   buttonText: {
     color: "#FFFFFF",
@@ -102,6 +106,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   pressed: {
-    opacity: 0.7,
+    opacity: 0.75,
   },
 });
